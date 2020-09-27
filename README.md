@@ -4,7 +4,7 @@
 
 提供了 [Docker 镜像](https://hub.docker.com/r/pupilcc/pushbot)，便于自建，也可直接使用我提供的 Bot，欢迎品尝~（[点击此处添加 Bot](https://t.me/notification_me_bot))
 
-该项目是将 [@Fndroid](https://github.com/Fndroid) 的 [tg_push_bot](https://github.com/Fndroid/tg_push_bot) 项目重写，同时提供 Docker 镜像便于部署，后续将探索更多功能。
+该项目是将 [@Fndroid](https://github.com/Fndroid) 停更的 [tg_push_bot](https://github.com/Fndroid/tg_push_bot) 项目重写，同时提供 Docker 镜像便于部署，后续将探索更多功能。
 
 
 ## 食用指南
@@ -80,9 +80,9 @@ services:
       - "25701:25701"
     environment:
       # Bot Token
-      - BOT_TOKEN=123456:xxxxx
+      - BOT_TOKEN=<TOKEN>
       # 自己的域名
-      - BOT_DOMAIN=https://pushbot.example.com
+      - BOT_DOMAIN=<DOMAIN>
 ```
 
 docker run
@@ -91,7 +91,7 @@ docker run
 docker run -d \
     --name pushbot \
     --restart unless-stopped \
-    -p 25701:25701
+    -p 25701:25701 \
     -e BOT_TOKEN=<TOKEN> \
     -e BOT_DOMAIN=<DOMAIN> \
     -v /home/pushbot.db:/app/pushbot/pushbot.db \
