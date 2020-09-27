@@ -7,9 +7,11 @@ spring:
     driver-class-name: org.sqlite.JDBC
   jpa:
     database-platform: com.pupilcc.pushbot.config.SQLiteDialect
+    show-sql: true
     hibernate:
       ddl-auto: none
-    show-sql: false
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 bot:
   # BotToken 123456:xxxxxxx
