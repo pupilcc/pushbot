@@ -1,0 +1,27 @@
+server:
+  port: 25701
+
+spring:
+  datasource:
+    url: jdbc:sqlite:/app/pushbot/pushbot.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: com.pupilcc.pushbot.config.SQLiteDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+
+bot:
+  # BotToken 123456:xxxxxxx
+  token:
+  # 域名 https://pushbot.example.com
+  domain:
+  # 用户发送 /start 时返回的内容，
+  # 使用 Markdown 语法
+  # %s 表示用户唯一URL
+  # %n 表示一个换行符
+  startHint: 已生成专属推送链接：%n%s%n%n[使用及更新日志](https://github.com/pupilcc/pushbot/blob/master/README.md)
+  # 用户发送 /end 时返回的内容
+  # 使用 Markdown 语法
+  # %n 表示一个换行符
+  endHint: 用户记录已经删除，旧链接已经失效，如需继续发送消息，请输入 /start 重新获取
