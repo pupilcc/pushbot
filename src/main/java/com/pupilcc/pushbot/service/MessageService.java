@@ -34,7 +34,7 @@ public class MessageService {
      * @param chatToken 用户Token
      * @return 响应信息
      */
-    public ApiResult<Object> sendMessage(BotMessageDTO dto, @PathVariable String chatToken) {
+    public ApiResult<Object> sendMessage(BotMessageDTO dto, String chatToken) {
         // 查找用户
         Users users = usersRepository.findByChatToken(chatToken);
         // 用户不存在
