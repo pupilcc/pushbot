@@ -1,6 +1,8 @@
 package com.pupilcc.pushbot.service;
 
+import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pupilcc.pushbot.config.BotProperties;
+import com.pupilcc.pushbot.entity.BotMessageDTO;
 import com.pupilcc.pushbot.entity.DockerWebHookDTO;
 import com.pupilcc.pushbot.users.Users;
 import com.pupilcc.pushbot.users.UsersRepository;
@@ -17,13 +19,16 @@ public class WebhookService {
     private final BotProperties botProperties;
     private final BotUpdateService botUpdateService;
     private final UsersRepository usersRepository;
+    private final MessageService messageService;
 
     public WebhookService(BotProperties botProperties,
                           BotUpdateService botUpdateService,
-                          UsersRepository usersRepository) {
+                          UsersRepository usersRepository,
+                          MessageService messageService) {
         this.botProperties = botProperties;
         this.botUpdateService = botUpdateService;
         this.usersRepository = usersRepository;
+        this.messageService = messageService;
     }
 
     /**
@@ -47,6 +52,12 @@ public class WebhookService {
         Users users = usersRepository.findByChatToken(chatToken);
         if (ObjectUtils.isNotEmpty(users)) {
             // 推送消息
+            BotMessageDTO messageDTO = new BotMessageDTO();
+            messageDTO.setText("Docker Hub 自动构建成功" + "\n\n" +
+                    dto.getRepository().getRepoName() + " 构建于 " + dto.getPushData().getTag() + "\n\n" +
+                    "[查看镜像](" + dto.getRepository().getRepoUrl() + ")");
+            messageDTO.setParseMode(ParseMode.Markdown);
+            messageService.sendMessage(messageDTO, chatToken);
         }
     }
 }
