@@ -7,7 +7,7 @@ spring:
     driver-class-name: org.sqlite.JDBC
   jpa:
     database-platform: com.pupilcc.pushbot.config.SQLiteDialect
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: none
       naming:
