@@ -36,7 +36,7 @@ public class WebhookController {
      * @param dto 消息
      * @param chatToken 用户Token
      */
-    @RequestMapping("/docker/notify/{chatToken}")
+    @RequestMapping("/docker/{chatToken}")
     public void webhookDocker(@RequestBody DockerWebHookDTO dto, @PathVariable String chatToken) {
         webHookService.webhookDocker(dto, chatToken);
     }
