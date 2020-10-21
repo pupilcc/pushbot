@@ -4,9 +4,6 @@
 
 提供了 [Docker 镜像](https://hub.docker.com/r/pupilcc/pushbot)，便于自建，也可直接使用我提供的 Bot，欢迎品尝~（[点击此处添加 Bot](https://t.me/notification_me_bot))
 
-该项目是将 [@Fndroid](https://github.com/Fndroid) 停更的 [tg_push_bot](https://github.com/Fndroid/tg_push_bot) 项目重写，同时提供 Docker 镜像便于部署，后续将探索更多功能。
-
-
 ## 食用指南
 
 ### Bot 命令说明
@@ -24,12 +21,24 @@ curl -X GET https://pushbot.pupilcc.com/sendMessage/:chatToken?text=HelloWorld
 curl -d "text=HelloWorld" -X POST https://pushbot.pupilcc.com/sendMessage/:chatToken
 ```
 
-### 参数说明
+**参数说明：**
 
 参数|类型|必须|说明
 -|-|-|-
-text|String|True|发送的文字内容
-parse_mode|String|False|发送文字内容的样式，可以是 Markdown 或 HTML
+text|String|true|发送的文字内容
+parse_mode|String|false|发送文字内容的样式，可以是 Markdown 或 HTML
+
+### 推送 Docker Hub 自动构建成功消息
+
+接收推送消息的 URL：
+
+```bash
+https://pushbot.pupilcc.com/webhook/docker/:chatToken
+```
+
+将该 URL 填写至 Docker Hub 仓库的 Webhooks URL 内即可，当 Docker Hub 自动构建成功后就会推送消息。
+
+![docker-webhook](https://vip2.loli.net/2020/10/21/I5QFjwv9sD8uXJf.png)
 
 ### 隐私相关
 
@@ -189,3 +198,7 @@ https://api.telegram.org/bot{botToken}/setWebhook?url={domain}/webhook/{botToken
   "description": "Webhook is already set"
 }
 ```
+
+## 鸣谢
+
+* [@Fndroid](https://github.com/Fndroid)
