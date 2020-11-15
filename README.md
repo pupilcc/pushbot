@@ -11,6 +11,8 @@
 * `/start`：生成/显示推送链接
 * `/end`：删除推送链接
 
+生成推送链接后，请将下列链接中的`:chatToken`替换成自己推送链接末尾专属的随机字符串，即可使用。
+
 ### 推送消息
 
 ```bash
@@ -133,7 +135,7 @@ server
         root  /home/wwwroot/xxxx.com;
 
         ssl_certificate /usr/local/nginx/conf/ssl/xxxx.com/fullchain.cer;
-        ssl_certificate_key /usr/local/nginx/conf/ssl/xxxx.com/dl2.liacr.com.key;
+        ssl_certificate_key /usr/local/nginx/conf/ssl/xxxx.com/xxxx.key;
         ssl_session_timeout 5m;
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
         ssl_prefer_server_ciphers on;
