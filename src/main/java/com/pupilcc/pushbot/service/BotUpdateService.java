@@ -14,8 +14,15 @@ public class BotUpdateService {
      * @param update 用户给 bot 发送的消息
      */
     public void process(Update update) {
-        String text = update.getMessage().getText().substring(1);
-        Long chatId = update.getMessage().getChatId();
-        BotMessageServiceEnum.valueOf(text).operation(chatId);
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            // 判断消息是命令还是对话
+            char ch = update.getMessage().getText().charAt(0);
+            boolean isCommand = ch == '/';
+            if (isCommand) {
+                String text = update.getMessage().getText().substring(1);
+                Long chatId = update.getMessage().getChatId();
+                BotMessageServiceEnum.valueOf(text).operation(chatId);
+            }
+        }
     }
 }
