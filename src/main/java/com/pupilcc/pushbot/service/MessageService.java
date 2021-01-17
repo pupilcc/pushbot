@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageService {
     private final UsersRepository usersRepository;
-
     private final TelegramBot telegramBot;
 
     public MessageService(UsersRepository usersRepository, TelegramBot telegramBot) {
@@ -30,21 +29,38 @@ public class MessageService {
 
     /**
      * 发送消息
-     * @param text 消息内容
-     * @param parseMode 消息格式
+     * @param dto 消息内容
      * @param chatToken 用户Token
      * @return 响应信息
      */
-    private boolean sendMessage(String text, ParseMode parseMode, String chatToken) {
+    public ApiResult<Object> sendMessage(BotMessageDTO dto, String chatToken) {
         // 查找用户
         Users users = usersRepository.findByChatToken(chatToken);
         // 用户不存在
         if (ObjectUtils.isEmpty(users)) {
-            return false;
+            return ApiResult.failed(ApiErrorCode.USER_NOT_EXIST);
         }
 
+        // 参数校验
+        ApiResult apiResult = checkParameter(dto);
+        if (!apiResult.ok()) {
+            return apiResult;
+        }
+
+        boolean isSend = sendMessage(dto.getText(), dto.getParseMode(), users.getChatId());
+        return ApiResult.success(isSend);
+    }
+
+    /**
+     * 发送消息
+     * @param text 消息内容
+     * @param parseMode 消息格式
+     * @param chatId 用户id
+     * @return 响应信息
+     */
+    private boolean sendMessage(String text, ParseMode parseMode, Long chatId) {
         // 给用户发送信息
-        SendMessage sendMessage = new SendMessage(users.getChatId(), text);
+        SendMessage sendMessage = new SendMessage(chatId, text);
         if (ObjectUtils.isNotEmpty(parseMode)) {
             sendMessage.parseMode(parseMode);
         }
@@ -53,36 +69,11 @@ public class MessageService {
     }
 
     /**
-     * 发送消息
-     * @param dto 接收参数
-     * @param chatToken 用户Token
-     * @return 响应信息
-     */
-    public ApiResult<Object> sendMessage(BotMessageDTO dto, String chatToken) {
-        ApiResult apiResult = checkParameter(dto, chatToken);
-        if (!apiResult.ok()) {
-            return apiResult;
-        }
-
-        boolean isSend = sendMessage(dto.getText(), dto.getParseMode(), chatToken);
-        return ApiResult.success(isSend);
-    }
-
-    /**
-     * 检查参数
-     * @param dto 数据
-     * @param chatToken 用户Token
+     * 参数校验
+     * @param dto 消息内容
      * @return 业务码
      */
-    private ApiResult checkParameter(BotMessageDTO dto, String chatToken) {
-        // 查找用户
-        Users users = usersRepository.findByChatToken(chatToken);
-        // 用户不存在
-        if (ObjectUtils.isEmpty(users)) {
-            return ApiResult.failed(ApiErrorCode.USER_NOT_EXIST);
-        }
-
-        // 参数检查
+    private ApiResult checkParameter(BotMessageDTO dto) {
         if (ObjectUtils.isEmpty(dto) || StringUtils.isBlank(dto.getText())) {
             return ApiResult.failed(ApiErrorCode.TEXT_NULL);
         }
