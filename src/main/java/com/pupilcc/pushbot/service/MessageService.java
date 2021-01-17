@@ -74,7 +74,10 @@ public class MessageService {
      * @return 业务码
      */
     private ApiResult checkParameter(BotMessageDTO dto) {
-        if (ObjectUtils.isEmpty(dto) || StringUtils.isBlank(dto.getText())) {
+        if (ObjectUtils.isEmpty(dto)) {
+            return ApiResult.failed(ApiErrorCode.PARAMETER_NULL);
+        }
+        if (StringUtils.isBlank(dto.getText())) {
             return ApiResult.failed(ApiErrorCode.TEXT_NULL);
         }
 

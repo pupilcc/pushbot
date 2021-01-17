@@ -14,6 +14,10 @@ public enum ApiErrorCode implements IErrorCode{
      */
     SUCCESS(0L, "success"),
     /**
+     * 参数为空
+     */
+    PARAMETER_NULL(-1L, "parameter null"),
+    /**
      * 用户不存在
      */
     USER_NOT_EXIST(-1L, "user not exist"),
