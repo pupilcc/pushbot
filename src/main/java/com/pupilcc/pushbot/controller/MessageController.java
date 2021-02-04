@@ -29,4 +29,15 @@ public class MessageController {
     public ApiResult<Object> sendMessage(BotMessageDTO dto, @PathVariable String chatToken) {
         return messageService.sendMessage(dto, chatToken);
     }
+
+    /**
+     * 给用户发送图片
+     * @param dto 消息内容
+     * @param chatToken 用户Token
+     * @return 响应消息
+     */
+    @RequestMapping("/sendPhoto/{chatToken}")
+    public ApiResult<Object> sendPhoto(BotMessageDTO dto, @PathVariable String chatToken) {
+        return messageService.sendPhoto(dto, chatToken);
+    }
 }
