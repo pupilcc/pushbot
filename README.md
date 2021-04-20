@@ -123,66 +123,6 @@ location / {
 }
 ```
 
-例如：
-
-```
-server
-    {
-        listen 443 ssl http2;
-        #listen [::]:443 ssl http2;
-        server_name xxxx.com ;
-        index index.html index.htm index.php default.html default.htm default.php;
-        root  /home/wwwroot/xxxx.com;
-
-        ssl_certificate /usr/local/nginx/conf/ssl/xxxx.com/fullchain.cer;
-        ssl_certificate_key /usr/local/nginx/conf/ssl/xxxx.com/xxxx.key;
-        ssl_session_timeout 5m;
-        ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
-        ssl_prefer_server_ciphers on;
-        ssl_ciphers "TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-128-CCM-8-SHA256:TLS13-AES-128-CCM-SHA256:EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5";
-        ssl_session_cache builtin:1000 shared:SSL:10m;
-        # openssl dhparam -out /usr/local/nginx/conf/ssl/dhparam.pem 2048
-        ssl_dhparam /usr/local/nginx/conf/ssl/dhparam.pem;
-
-        include rewrite/none.conf;
-        #error_page   404   /404.html;
-
-        # Deny access to PHP files in specific directory
-        #location ~ /(wp-content|uploads|wp-includes|images)/.*\.php$ { deny all; }
-
-        include enable-php.conf;
-
-        # 反向代理 Docker 指定端口
-        location / {
-            proxy_pass         http://127.0.0.1:25701;
-            proxy_set_header   Host             $host;
-            proxy_set_header   X-Real-IP        $remote_addr;
-            proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
-        }
-
-        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
-        {
-            expires      30d;
-        }
-
-        location ~ .*\.(js|css)?$
-        {
-            expires      12h;
-        }
-
-        location ~ /.well-known {
-            allow all;
-        }
-
-        location ~ /\.
-        {
-            deny all;
-        }
-
-        access_log off;
-    }
-```
-
 #### 设置 WebHook
 
 请将以下链接中的 `{botToken}` 替换为 Bot Token，`{domian}` 替换为自己设置的域名，替换好后在浏览器访问该链接。
