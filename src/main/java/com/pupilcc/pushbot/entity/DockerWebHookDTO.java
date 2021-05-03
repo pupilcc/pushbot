@@ -1,9 +1,12 @@
 package com.pupilcc.pushbot.entity;
 
+import lombok.Data;
+
 /**
  * Docker WebHook 消息
  * @author pupilcc
  */
+@Data
 public class DockerWebHookDTO {
     /**
      * 回调地址
@@ -19,39 +22,6 @@ public class DockerWebHookDTO {
      * 仓库数据
      */
     private DockerWebHookRepositoryDTO repository;
-
-    public String getCallbackUrl() {
-        return callbackUrl;
-    }
-
-    public void setCallbackUrl(String callbackUrl) {
-        this.callbackUrl = callbackUrl;
-    }
-
-    public DockerWebHookPushDataDTO getPushData() {
-        return pushData;
-    }
-
-    public void setPushData(DockerWebHookPushDataDTO pushData) {
-        this.pushData = pushData;
-    }
-
-    public DockerWebHookRepositoryDTO getRepository() {
-        return repository;
-    }
-
-    public void setRepository(DockerWebHookRepositoryDTO repository) {
-        this.repository = repository;
-    }
-
-    @Override
-    public String toString() {
-        return "DockerWebHookDTO{" +
-                "callbackUrl='" + callbackUrl + '\'' +
-                ", pushData=" + pushData +
-                ", repository=" + repository +
-                '}';
-    }
 
     /**
      * 兼容下划线字段
