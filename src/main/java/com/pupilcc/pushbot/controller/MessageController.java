@@ -1,5 +1,6 @@
 package com.pupilcc.pushbot.controller;
 
+import com.pupilcc.pushbot.entity.BotPhotoDTO;
 import com.pupilcc.pushbot.extension.ApiResult;
 import com.pupilcc.pushbot.service.MessageService;
 import com.pupilcc.pushbot.entity.BotMessageDTO;
@@ -37,7 +38,7 @@ public class MessageController {
      * @return 响应消息
      */
     @RequestMapping("/sendPhoto/{chatToken}")
-    public ApiResult<Object> sendPhoto(BotMessageDTO dto, @PathVariable String chatToken) {
+    public ApiResult<Object> sendPhoto(BotPhotoDTO dto, @PathVariable String chatToken) {
         return messageService.sendPhoto(dto, chatToken);
     }
 }

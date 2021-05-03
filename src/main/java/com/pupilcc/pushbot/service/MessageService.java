@@ -7,14 +7,15 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
 import com.pengrad.telegrambot.response.SendResponse;
 import com.pupilcc.pushbot.entity.BotMessageDTO;
+import com.pupilcc.pushbot.entity.BotPhotoDTO;
 import com.pupilcc.pushbot.extension.ApiErrorCode;
 import com.pupilcc.pushbot.extension.ApiResult;
 import com.pupilcc.pushbot.users.Users;
 import com.pupilcc.pushbot.users.UsersRepository;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,7 +81,7 @@ public class MessageService {
      * @param chatToken 用户Token
      * @return 响应信息
      */
-    public ApiResult<Object> sendPhoto(BotMessageDTO dto, String chatToken) {
+    public ApiResult<Object> sendPhoto(BotPhotoDTO dto, String chatToken) {
         // 查找用户
         Users users = usersRepository.findByChatToken(chatToken);
         // 用户不存在
@@ -96,18 +97,17 @@ public class MessageService {
 
         boolean isSend = false;
         if (StringUtils.isNotBlank(dto.getPhotoUrl())) {
-            isSend = sendPhoto(dto.getText(), dto.getPhotoUrl(), dto.getParseMode(), users.getChatId());
+            isSend = sendPhoto(dto.getCaption(), dto.getPhotoUrl(), dto.getParseMode(), users.getChatId());
         } else if (ObjectUtils.isNotEmpty(dto.getPhotoFile())){
-            MultipartFile multipartFile = dto.getPhotoFile();
-            String fileName = multipartFile.getOriginalFilename();
-            assert fileName != null;
+            FilePart filePart = dto.getPhotoFile();
+            String fileName = filePart.filename();
             String prefix= fileName.substring(fileName.lastIndexOf("."));
 
             final File file;
             try {
                 file = File.createTempFile(IdUtil.simpleUUID(), prefix);
-                multipartFile.transferTo(file);
-                isSend = sendPhoto(dto.getText(), file, dto.getParseMode(), users.getChatId());
+                filePart.transferTo(file);
+                isSend = sendPhoto(dto.getCaption(), file, dto.getParseMode(), users.getChatId());
                 file.delete();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -170,10 +170,26 @@ public class MessageService {
         if (ObjectUtils.isEmpty(dto)) {
             return ApiResult.failed(ApiErrorCode.PARAMETER_NULL);
         }
-        // 如果存在图片，则消息内容非必填。
-        boolean isExistPhoto = ObjectUtils.isNotEmpty(dto.getPhotoFile()) || StringUtils.isNotBlank(dto.getPhotoUrl());
-        if (!isExistPhoto && StringUtils.isBlank(dto.getText())) {
+        if (StringUtils.isBlank(dto.getText())) {
             return ApiResult.failed(ApiErrorCode.TEXT_NULL);
+        }
+
+        return ApiResult.success();
+    }
+
+    /**
+     * 参数校验
+     * @param dto 消息内容
+     * @return 业务码
+     */
+    private ApiResult checkParameter(BotPhotoDTO dto) {
+        if (ObjectUtils.isEmpty(dto)) {
+            return ApiResult.failed(ApiErrorCode.PARAMETER_NULL);
+        }
+
+        boolean isExistPhoto = ObjectUtils.isNotEmpty(dto.getPhotoFile()) || StringUtils.isNotBlank(dto.getPhotoUrl());
+        if (!isExistPhoto) {
+            return ApiResult.failed(ApiErrorCode.IMG_NULL);
         }
 
         return ApiResult.success();

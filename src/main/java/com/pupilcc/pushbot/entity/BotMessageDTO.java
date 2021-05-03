@@ -3,8 +3,6 @@ package com.pupilcc.pushbot.entity;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-
 /**
  * 发送消息的参数
  * @author pupilcc
@@ -14,16 +12,6 @@ public class BotMessageDTO {
      * 文本内容
      */
     private String text;
-
-    /**
-     * 图片链接
-     */
-    private String photoUrl;
-
-    /**
-     * 图片文件
-     */
-    private MultipartFile photoFile;
 
     /**
      * 格式化选项
@@ -53,28 +41,10 @@ public class BotMessageDTO {
         this.parseMode = parseMode;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
-    public MultipartFile getPhotoFile() {
-        return photoFile;
-    }
-
-    public void setPhotoFile(MultipartFile photoFile) {
-        this.photoFile = photoFile;
-    }
-
     @Override
     public String toString() {
         return "BotMessageDTO{" +
                 "text='" + text + '\'' +
-                ", photoUrl='" + photoUrl + '\'' +
-                ", photoFile=" + photoFile +
                 ", parseMode=" + parseMode +
                 '}';
     }
