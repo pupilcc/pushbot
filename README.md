@@ -55,11 +55,7 @@ curl -d "photoUrl=https://xxx.com/xxxxx.jpg" -X POST https://pushbot.pupilcc.com
 
 ### 推送 Docker Hub 自动构建成功消息
 
-接收推送消息的 URL：
-
-```bash
-https://pushbot.pupilcc.com/webhook/docker/:chatToken
-```
+接口地址：`/webhook/docker/{chatToken}`
 
 将该 URL 填写至 Docker Hub 仓库的 Webhooks URL 内即可，当 Docker Hub 自动构建成功后就会推送消息。
 
