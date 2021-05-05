@@ -22,9 +22,13 @@ public enum ApiErrorCode implements IErrorCode{
      */
     USER_NOT_EXIST(-1L, "user not exist"),
     /**
-     * text 为空
+     * 文字为空
      */
     TEXT_NULL(-1L, "text null"),
+    /**
+     * 图片为空
+     */
+    IMG_NULL(-1L, "image null"),
 
     ;
 

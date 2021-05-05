@@ -1,5 +1,6 @@
 package com.pupilcc.pushbot.service;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -21,7 +22,9 @@ public class BotUpdateService {
             if (isCommand) {
                 String text = update.getMessage().getText().substring(1);
                 Long chatId = update.getMessage().getChatId();
-                BotMessageServiceEnum.valueOf(text).operation(chatId);
+                if (BotMessageServiceEnum.isExist(text)) {
+                    BotMessageServiceEnum.valueOf(text).operation(chatId);
+                }
             }
         }
     }

@@ -11,32 +11,51 @@
 * `/start`：生成/显示推送链接
 * `/end`：删除推送链接
 
-生成推送链接后，请将下列链接中的`:chatToken`替换成自己推送链接末尾专属的随机字符串，即可使用。
+生成推送链接后，请将下列链接中的`{chatToken}`替换成自己推送链接末尾专属的随机字符串，即可使用。
 
 ### 推送消息
 
-```bash
-// using get
-curl -X GET https://pushbot.pupilcc.com/sendMessage/:chatToken?text=HelloWorld
-
-// using post
-curl -d "text=HelloWorld" -X POST https://pushbot.pupilcc.com/sendMessage/:chatToken
-```
+接口地址：`/sendMessage/{chatToken}`
 
 **参数说明：**
 
 参数|类型|必须|说明
 -|-|-|-
-text|String|true|发送的文字内容
-parse_mode|String|false|发送文字内容的样式，可以是 Markdown 或 HTML
+text|String|是|发送的文字内容
+parse_mode|String|否|发送文字内容的样式，可以是 Markdown 或 HTML
+
+```bash
+// using get
+curl -X GET https://pushbot.pupilcc.com/sendMessage/{chatToken}?text=HelloWorld
+
+// using post
+curl -d "text=HelloWorld" -X POST https://pushbot.pupilcc.com/sendMessage/{chatToken}
+```
+
+### 推送图片
+
+接口地址：`/sendPhoto/{chatToken}`
+
+**参数说明：**
+
+参数|类型|必须|说明
+-|-|-|-
+photoUrl|String|是（当有图片文件时，可为否）|发送的图片外链
+photoFile|File|是（当有图片外链时，可为否）|发送的图片文件
+caption|String|否|发送的文字内容
+parse_mode|String|否|发送内容的样式，可以是 Markdown 或 HTML
+
+```bash
+// using get
+curl -X GET https://pushbot.pupilcc.com/sendPhoto/{chtToken}?photoUrl=https://xxx.com/xxxxx.jpg
+
+// using post
+curl -d "photoUrl=https://xxx.com/xxxxx.jpg" -X POST https://pushbot.pupilcc.com/sendPhoto/{chatToken}
+```
 
 ### 推送 Docker Hub 自动构建成功消息
 
-接收推送消息的 URL：
-
-```bash
-https://pushbot.pupilcc.com/webhook/docker/:chatToken
-```
+接口地址：`/webhook/docker/{chatToken}`
 
 将该 URL 填写至 Docker Hub 仓库的 Webhooks URL 内即可，当 Docker Hub 自动构建成功后就会推送消息。
 
