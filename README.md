@@ -4,6 +4,12 @@
 
 提供了 [Docker 镜像](https://hub.docker.com/r/pupilcc/pushbot)，便于自建，也可直接使用我提供的 Bot，欢迎品尝~（[点击此处添加 Bot](https://t.me/notification_me_bot))
 
+## 功能
+
+* [推送消息](#推送消息)
+* [推送图片](#推送图片)
+* [推送 Docker Hub 自动构建成功消息](#DockerHub)
+
 ## 食用指南
 
 ### Bot 命令说明
@@ -53,7 +59,7 @@ curl -X GET https://pushbot.pupilcc.com/sendPhoto/{chtToken}?photoUrl=https://xx
 curl -d "photoUrl=https://xxx.com/xxxxx.jpg" -X POST https://pushbot.pupilcc.com/sendPhoto/{chatToken}
 ```
 
-### 推送 Docker Hub 自动构建成功消息
+### <span id="DockerHub">推送 Docker Hub 自动构建成功消息</span>
 
 接口地址：`/webhook/docker/{chatToken}`
 
