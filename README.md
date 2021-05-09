@@ -4,6 +4,11 @@
 
 提供了 [Docker 镜像](https://hub.docker.com/r/pupilcc/pushbot)，便于自建，也可直接使用我提供的 Bot，欢迎品尝~（[点击此处添加 Bot](https://t.me/notification_me_bot))
 
+## 功能
+
+* [推送消息](#推送消息)
+* [推送 Docker Hub 自动构建成功消息](#DockerHub)
+
 ## 食用指南
 
 ### Bot 命令说明
@@ -22,38 +27,25 @@
 参数|类型|必须|说明
 -|-|-|-
 text|String|是|发送的文字内容
+photoUrl|String|是（当有图片文件时，可为否）|发送的图片外链
+photoFile|File|是（当有图片外链时，可为否）|发送的图片文件
 parse_mode|String|否|发送文字内容的样式，可以是 Markdown 或 HTML
 
 ```bash
 // using get
+// 推送消息
 curl -X GET https://pushbot.pupilcc.com/sendMessage/{chatToken}?text=HelloWorld
-
-// using post
-curl -d "text=HelloWorld" -X POST https://pushbot.pupilcc.com/sendMessage/{chatToken}
-```
-
-### 推送图片
-
-接口地址：`/sendPhoto/{chatToken}`
-
-**参数说明：**
-
-参数|类型|必须|说明
--|-|-|-
-photoUrl|String|是（当有图片文件时，可为否）|发送的图片外链
-photoFile|File|是（当有图片外链时，可为否）|发送的图片文件
-caption|String|否|发送的文字内容
-parse_mode|String|否|发送内容的样式，可以是 Markdown 或 HTML
-
-```bash
-// using get
+// 推送图片
 curl -X GET https://pushbot.pupilcc.com/sendPhoto/{chtToken}?photoUrl=https://xxx.com/xxxxx.jpg
 
 // using post
+// 推送消息
+curl -d "text=HelloWorld" -X POST https://pushbot.pupilcc.com/sendMessage/{chatToken}
+// 推送图片
 curl -d "photoUrl=https://xxx.com/xxxxx.jpg" -X POST https://pushbot.pupilcc.com/sendPhoto/{chatToken}
 ```
 
-### 推送 Docker Hub 自动构建成功消息
+### <span id="DockerHub">推送 Docker Hub 自动构建成功消息</span>
 
 接口地址：`/webhook/docker/{chatToken}`
 

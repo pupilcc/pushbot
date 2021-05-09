@@ -41,6 +41,7 @@ public class WebhookService {
      * @param botToken TelegramBotToken
      */
     public void message(Update update, String botToken) {
+        // 确保 Webhook 请求来自 Telegram，因此比对 BotToken
         if (botToken.equals(botProperties.getToken())) {
             botUpdateService.process(update);
         }
