@@ -1,7 +1,10 @@
-name: ci
+name: Docker Image CI
 
 on:
   push:
+    branches:
+      - master
+      - dev
     tags:
       - v*
 
