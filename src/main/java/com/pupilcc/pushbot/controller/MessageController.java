@@ -1,8 +1,8 @@
 package com.pupilcc.pushbot.controller;
 
+import com.pupilcc.pushbot.entity.SendMessageDTO;
 import com.pupilcc.pushbot.extension.ApiResult;
 import com.pupilcc.pushbot.service.MessageService;
-import com.pupilcc.pushbot.entity.BotMessageDTO;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +26,7 @@ public class MessageController {
      * @return 响应消息
      */
     @RequestMapping("/sendMessage/{chatToken}")
-    public ApiResult<Object> sendMessage(BotMessageDTO dto, @PathVariable String chatToken) {
+    public ApiResult<Object> sendMessage(SendMessageDTO dto, @PathVariable String chatToken) {
         return messageService.sendMessage(dto, chatToken);
     }
 }
