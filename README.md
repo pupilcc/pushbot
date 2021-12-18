@@ -74,6 +74,8 @@ Bot 不会识别和储存任何用户推送的消息，只会将推送消息发�
 #### 创建 sqlite3 数据库 pushbot.db
 
 ```
+// 进入存放数据库文件的目录
+cd /opt
 // pushbot.db
 sqlite3 pushbot.db
 
@@ -95,8 +97,8 @@ services:
     container_name: pushbot
     restart: unless-stopped
     volumes:
-      # 创建好的数据库绝对路径 /home/pushbot.db
-      - /home/pushbot.db:/app/pushbot/pushbot.db
+      # 创建好的数据库绝对路径
+      - /opt/pushbot.db:/app/pushbot/pushbot.db
     ports:
       - "25701:25701"
     environment:
@@ -115,7 +117,7 @@ docker run -d \
     -p 25701:25701 \
     -e BOT_TOKEN=<TOKEN> \
     -e BOT_DOMAIN=<DOMAIN> \
-    -v /home/pushbot.db:/app/pushbot/pushbot.db \
+    -v /opt/pushbot.db:/app/pushbot/pushbot.db \
     pupilcc/pushbot
 ```
 
