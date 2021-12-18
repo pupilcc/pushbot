@@ -31,16 +31,16 @@ photo|String|否|图片文件或者图片外链
 parse_mode|String|否|发送文字内容的样式，可以是 Markdown 或 HTML
 
 ```bash
-// using get
-// 推送消息
+# using get
+# 推送消息
 curl -X GET https://pushbot.pupilcc.com/sendMessage/{chatToken}?text=HelloWorld
-// 推送图片
+# 推送图片
 curl -X GET https://pushbot.pupilcc.com/sendPhoto/{chtToken}?photo=https://xxx.com/xxxxx.jpg
 
-// using post
-// 推送消息
+# using post
+# 推送消息
 curl -d "text=HelloWorld" -X POST https://pushbot.pupilcc.com/sendMessage/{chatToken}
-// 推送图片
+# 推送图片
 curl -d "photo=https://xxx.com/xxxxx.jpg" -X POST https://pushbot.pupilcc.com/sendPhoto/{chatToken}
 ```
 
@@ -74,9 +74,9 @@ Bot 不会识别和储存任何用户推送的消息，只会将推送消息发�
 #### 创建 sqlite3 数据库 pushbot.db
 
 ```
-// 进入存放数据库文件的目录
+# 进入存放数据库文件的目录
 cd /opt
-// pushbot.db
+# pushbot.db
 sqlite3 pushbot.db
 
 sqlite> CREATE TABLE users (chatId int unique, chatToken text unique);
