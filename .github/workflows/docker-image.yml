@@ -2,9 +2,12 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ pupilcc-patch-1 ]
-  pull_request:
-    branches: [ pupilcc-patch-1 ]
+    branches:
+      - master
+      - dev
+      - pupilcc-patch-1
+    tags:
+      - v*
 
 jobs:
   push_to_registry:
