@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.pupilcc</groupId>
     <artifactId>pushbot</artifactId>
-    <version>0.2.3</version>
+    <version>0.2.4</version>
     <name>pushbot</name>
     <description>telegram notification bot</description>
 
@@ -59,6 +59,19 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- 避免 actuator 和 webflux 同时使用缺少 jersey-server 依赖 -->
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-server -->
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
         </dependency>
@@ -77,13 +90,13 @@
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
-            <version>4.4.0.1</version>
+            <version>5.5.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.pengrad</groupId>
             <artifactId>java-telegram-bot-api</artifactId>
-            <version>4.9.0</version>
+            <version>5.5.0</version>
         </dependency>
 
         <!-- lombok -->

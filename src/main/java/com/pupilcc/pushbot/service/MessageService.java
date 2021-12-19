@@ -6,7 +6,7 @@ import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
 import com.pengrad.telegrambot.response.SendResponse;
-import com.pupilcc.pushbot.entity.BotMessageDTO;
+import com.pupilcc.pushbot.entity.SendMessageDTO;
 import com.pupilcc.pushbot.extension.ApiErrorCode;
 import com.pupilcc.pushbot.extension.ApiResult;
 import com.pupilcc.pushbot.users.Users;
@@ -39,7 +39,7 @@ public class MessageService {
      * @param chatToken 用户Token
      * @return 响应信息
      */
-    public ApiResult<Object> sendMessage(BotMessageDTO dto, String chatToken) {
+    public ApiResult<Object> sendMessage(SendMessageDTO dto, String chatToken) {
         // 查找用户
         Users users = usersRepository.findByChatToken(chatToken);
         // 用户不存在
@@ -87,12 +87,19 @@ public class MessageService {
      * @param chatId 用户id
      * @return 是否发送成功
      */
-    private boolean sendPhoto(BotMessageDTO dto, Long chatId) {
+    private boolean sendPhoto(SendMessageDTO dto, Long chatId) {
         boolean isSend = false;
-        if (StringUtils.isNotBlank(dto.getPhotoUrl())) {
-            isSend = sendPhoto(dto.getText(), dto.getPhotoUrl(), dto.getParseMode(), chatId);
-        } else if (ObjectUtils.isNotEmpty(dto.getPhotoFile())){
-            FilePart filePart = dto.getPhotoFile();
+        Object photoObj = dto.getPhoto();
+
+        boolean isStr = photoObj instanceof String;
+        if (isStr) {
+            String photoUrl = String.valueOf(dto.getPhoto());
+            isSend = sendPhoto(dto.getText(), photoUrl, dto.getParseMode(), chatId);
+        }
+
+        boolean isFile = photoObj instanceof FilePart;
+        if (isFile) {
+            FilePart filePart = (FilePart) dto.getPhoto();
             String fileName = filePart.filename();
             String prefix= fileName.substring(fileName.lastIndexOf("."));
 
@@ -159,7 +166,7 @@ public class MessageService {
      * @param dto 消息内容
      * @return 业务码
      */
-    private ApiResult checkParameter(BotMessageDTO dto) {
+    private ApiResult checkParameter(SendMessageDTO dto) {
         if (ObjectUtils.isEmpty(dto)) {
             return ApiResult.failed(ApiErrorCode.PARAMETER_NULL);
         }
@@ -176,7 +183,7 @@ public class MessageService {
      * @param dto 请求体
      * @return true 存在图片; false 不存在图片;
      */
-    private boolean isExistPhoto(BotMessageDTO dto) {
-        return StringUtils.isNotBlank(dto.getPhotoUrl()) || ObjectUtils.isNotEmpty(dto.getPhotoFile());
+    private boolean isExistPhoto(SendMessageDTO dto) {
+        return ObjectUtils.isNotEmpty(dto.getPhoto());
     }
 }

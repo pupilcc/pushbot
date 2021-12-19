@@ -2,7 +2,7 @@ package com.pupilcc.pushbot.service;
 
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pupilcc.pushbot.config.BotProperties;
-import com.pupilcc.pushbot.entity.BotMessageDTO;
+import com.pupilcc.pushbot.entity.SendMessageDTO;
 import com.pupilcc.pushbot.entity.DockerWebHookDTO;
 import com.pupilcc.pushbot.users.Users;
 import com.pupilcc.pushbot.users.UsersRepository;
@@ -57,7 +57,7 @@ public class WebhookService {
         Users users = usersRepository.findByChatToken(chatToken);
         if (ObjectUtils.isNotEmpty(users)) {
             // 推送消息
-            BotMessageDTO messageDTO = new BotMessageDTO();
+            SendMessageDTO messageDTO = new SendMessageDTO();
             messageDTO.setText("Docker Hub 自动构建成功" + "\n\n" +
                     dto.getRepository().getRepoName() + " 构建于 " + dto.getPushData().getTag() + "\n\n" +
                     "[查看镜像](" + dto.getRepository().getRepoUrl() + ")");

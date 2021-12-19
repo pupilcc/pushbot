@@ -26,23 +26,22 @@
 
 参数|类型|必须|说明
 -|-|-|-
-text|String|是|发送的文字内容
-photoUrl|String|是（当有图片文件时，可为否）|发送的图片外链
-photoFile|File|是（当有图片外链时，可为否）|发送的图片文件
+text|String|是|文字内容(当 photo 存在时可为空)
+photo|String|否|图片文件或者图片外链
 parse_mode|String|否|发送文字内容的样式，可以是 Markdown 或 HTML
 
 ```bash
-// using get
-// 推送消息
-curl -X GET https://pushbot.pupilcc.com/sendMessage/{chatToken}?text=HelloWorld
-// 推送图片
-curl -X GET https://pushbot.pupilcc.com/sendPhoto/{chtToken}?photoUrl=https://xxx.com/xxxxx.jpg
+# using get
+# 推送消息
+curl -X GET https://pb.pupilcc.app/sendMessage/{chatToken}?text=HelloWorld
+# 推送图片
+curl -X GET https://pb.pupilcc.app/sendMessage/{chtToken}?photo=https://xxx.com/xxxxx.jpg
 
-// using post
-// 推送消息
-curl -d "text=HelloWorld" -X POST https://pushbot.pupilcc.com/sendMessage/{chatToken}
-// 推送图片
-curl -d "photoUrl=https://xxx.com/xxxxx.jpg" -X POST https://pushbot.pupilcc.com/sendPhoto/{chatToken}
+# using post
+# 推送消息
+curl -d "text=HelloWorld" -X POST https://pb.pupilcc.app/sendMessage/{chatToken}
+# 推送图片
+curl -d "photo=https://xxx.com/xxxxx.jpg" -X POST https://pb.pupilcc.app/sendMessage/{chatToken}
 ```
 
 ### <span id="DockerHub">推送 Docker Hub 自动构建成功消息</span>
@@ -75,7 +74,9 @@ Bot 不会识别和储存任何用户推送的消息，只会将推送消息发�
 #### 创建 sqlite3 数据库 pushbot.db
 
 ```
-// pushbot.db
+# 进入存放数据库文件的目录
+cd /opt
+# pushbot.db
 sqlite3 pushbot.db
 
 sqlite> CREATE TABLE users (chatId int unique, chatToken text unique);
@@ -96,8 +97,8 @@ services:
     container_name: pushbot
     restart: unless-stopped
     volumes:
-      # 创建好的数据库绝对路径 /home/pushbot.db
-      - /home/pushbot.db:/app/pushbot/pushbot.db
+      # 创建好的数据库绝对路径
+      - /opt/pushbot.db:/app/pushbot/pushbot.db
     ports:
       - "25701:25701"
     environment:
@@ -116,7 +117,7 @@ docker run -d \
     -p 25701:25701 \
     -e BOT_TOKEN=<TOKEN> \
     -e BOT_DOMAIN=<DOMAIN> \
-    -v /home/pushbot.db:/app/pushbot/pushbot.db \
+    -v /opt/pushbot.db:/app/pushbot/pushbot.db \
     pupilcc/pushbot
 ```
 
