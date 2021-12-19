@@ -33,15 +33,15 @@ parse_mode|String|否|发送文字内容的样式，可以是 Markdown 或 HTML
 ```bash
 # using get
 # 推送消息
-curl -X GET https://pushbot.pupilcc.com/sendMessage/{chatToken}?text=HelloWorld
+curl -X GET https://pb.pupilcc.app/sendMessage/{chatToken}?text=HelloWorld
 # 推送图片
-curl -X GET https://pushbot.pupilcc.com/sendPhoto/{chtToken}?photo=https://xxx.com/xxxxx.jpg
+curl -X GET https://pb.pupilcc.app/sendMessage/{chtToken}?photo=https://xxx.com/xxxxx.jpg
 
 # using post
 # 推送消息
-curl -d "text=HelloWorld" -X POST https://pushbot.pupilcc.com/sendMessage/{chatToken}
+curl -d "text=HelloWorld" -X POST https://pb.pupilcc.app/sendMessage/{chatToken}
 # 推送图片
-curl -d "photo=https://xxx.com/xxxxx.jpg" -X POST https://pushbot.pupilcc.com/sendPhoto/{chatToken}
+curl -d "photo=https://xxx.com/xxxxx.jpg" -X POST https://pb.pupilcc.app/sendMessage/{chatToken}
 ```
 
 ### <span id="DockerHub">推送 Docker Hub 自动构建成功消息</span>
