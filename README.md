@@ -153,6 +153,6 @@ https://api.telegram.org/bot{botToken}/setWebhook?url={domain}/webhook/{botToken
 }
 ```
 
-## 鸣谢
+## 感谢
 
-* [@Fndroid](https://github.com/Fndroid)
+* [@Fndroid](https://github.com/Fndroid/tg_push_bot)

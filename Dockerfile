@@ -3,6 +3,6 @@ COPY ./pom.xml pom.xml
 COPY ./src src/
 RUN mvn clean package -B -e
 
-FROM openjdk:8-jre-alpine
+FROM amazoncorretto:8-alpine-jre
 COPY --from=MAVEN_BUILD target/*.jar app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
