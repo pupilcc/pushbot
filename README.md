@@ -50,7 +50,7 @@ curl -d "photo=https://xxx.com/xxxxx.jpg" -X POST https://pb.pupilcc.app/sendMes
 
 将该 URL 填写至 Docker Hub 仓库的 Webhooks URL 内即可，当 Docker Hub 自动构建成功后就会推送消息。
 
-![docker-webhook](https://vip2.loli.net/2020/10/21/I5QFjwv9sD8uXJf.png)
+![docker-webhook](https://vip1.loli.io/2022/01/20/RLbr24NPfUc19Gv.png)
 
 ### 隐私相关
 
@@ -155,4 +155,4 @@ https://api.telegram.org/bot{botToken}/setWebhook?url={domain}/webhook/{botToken
 
 ## 感谢
 
-* [@Fndroid](https://github.com/Fndroid/tg_push_bot)
+* [Fndroid/tg_push_bot](https://github.com/Fndroid/tg_push_bot)
