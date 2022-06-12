@@ -2,9 +2,10 @@ package com.pupilcc.pushbot.extension;
 
 /**
  * REST API 错误码
+ *
  * @author MyBatis Plus
  */
-public enum ApiErrorCode implements IErrorCode{
+public enum ApiErrorCode implements IErrorCode {
     /**
      * 失败
      */

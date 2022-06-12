@@ -2,6 +2,7 @@ package com.pupilcc.pushbot.extension;
 
 /**
  * REST API 请求异常类
+ *
  * @author MyBatis Plus
  */
 public class ApiException extends RuntimeException {

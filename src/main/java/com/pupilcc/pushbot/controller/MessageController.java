@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 消息控制器
+ *
  * @author pupilcc
  */
 @RestController
@@ -21,7 +22,8 @@ public class MessageController {
 
     /**
      * 给用户发送消息
-     * @param dto 消息体
+     *
+     * @param dto       消息体
      * @param chatToken 用户token
      * @return 响应消息
      */

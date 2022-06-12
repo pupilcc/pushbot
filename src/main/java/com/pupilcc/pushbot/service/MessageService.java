@@ -21,6 +21,7 @@ import java.io.IOException;
 
 /**
  * 消息的业务处理
+ *
  * @author pupilcc
  */
 @Service
@@ -35,7 +36,8 @@ public class MessageService {
 
     /**
      * 发送消息
-     * @param dto 消息内容
+     *
+     * @param dto       消息内容
      * @param chatToken 用户Token
      * @return 响应信息
      */
@@ -66,9 +68,10 @@ public class MessageService {
 
     /**
      * 发送消息
-     * @param text 消息内容
+     *
+     * @param text      消息内容
      * @param parseMode 消息格式
-     * @param chatId 用户id
+     * @param chatId    用户id
      * @return 响应信息
      */
     private boolean sendMessage(String text, ParseMode parseMode, Long chatId) {
@@ -83,7 +86,8 @@ public class MessageService {
 
     /**
      * 发送图片
-     * @param dto 消息内容
+     *
+     * @param dto    消息内容
      * @param chatId 用户id
      * @return 是否发送成功
      */
@@ -101,7 +105,7 @@ public class MessageService {
         if (isFile) {
             FilePart filePart = (FilePart) dto.getPhoto();
             String fileName = filePart.filename();
-            String prefix= fileName.substring(fileName.lastIndexOf("."));
+            String prefix = fileName.substring(fileName.lastIndexOf("."));
 
             final File file;
             try {
@@ -119,10 +123,11 @@ public class MessageService {
 
     /**
      * 发送图片
-     * @param text 消息内容
+     *
+     * @param text      消息内容
      * @param parseMode 消息格式
-     * @param photoUrl 图片链接
-     * @param chatId 用户id
+     * @param photoUrl  图片链接
+     * @param chatId    用户id
      * @return 响应信息
      */
     private boolean sendPhoto(String text, String photoUrl, ParseMode parseMode, Long chatId) {
@@ -132,10 +137,11 @@ public class MessageService {
 
     /**
      * 发送图片
-     * @param text 消息内容
+     *
+     * @param text      消息内容
      * @param parseMode 消息格式
      * @param photoFile 图片文件
-     * @param chatId 用户id
+     * @param chatId    用户id
      * @return 响应信息
      */
     private boolean sendPhoto(String text, File photoFile, ParseMode parseMode, Long chatId) {
@@ -145,8 +151,9 @@ public class MessageService {
 
     /**
      * 发送图片
+     *
      * @param sendPhoto 图片对象
-     * @param text 消息内容
+     * @param text      消息内容
      * @param parseMode 消息格式
      * @return 响应信息
      */
@@ -163,6 +170,7 @@ public class MessageService {
 
     /**
      * 参数校验
+     *
      * @param dto 消息内容
      * @return 业务码
      */
@@ -180,6 +188,7 @@ public class MessageService {
 
     /**
      * 是否存在图片
+     *
      * @param dto 请求体
      * @return true 存在图片; false 不存在图片;
      */

@@ -1,12 +1,16 @@
 package com.pupilcc.pushbot.extension;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Optional;
 
 /**
  * REST API 返回结果
+ *
  * @author Mybatis Plus
  */
+@Data
 public class ApiResult<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -84,29 +88,5 @@ public class ApiResult<T> implements Serializable {
         } else {
             return this.data;
         }
-    }
-
-    public long getCode() {
-        return code;
-    }
-
-    public void setCode(long code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

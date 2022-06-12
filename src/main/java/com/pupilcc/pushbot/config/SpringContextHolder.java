@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 public class SpringContextHolder implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        SpringContextHolder.applicationContext = applicationContext;
-    }
-
     public static ApplicationContext getApplicationContext() {
         assertApplicationContext();
         return applicationContext;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        SpringContextHolder.applicationContext = applicationContext;
     }
 
     public static <T> T getBean(String beanName) {

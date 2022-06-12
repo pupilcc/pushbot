@@ -12,6 +12,7 @@ import java.util.Optional;
 
 /**
  * 链接的业务处理
+ *
  * @author pupilcc
  */
 @Service
@@ -24,6 +25,8 @@ public class LinkService {
 
     /**
      * 生成/显示链接
+     *
+     * @param chatId 用户id
      * @return 生成的链接
      */
     public String create(Long chatId) {
@@ -47,6 +50,8 @@ public class LinkService {
 
     /**
      * 删除链接
+     *
+     * @param chatId 用户id
      */
     public void delete(Long chatId) {
         Optional<Users> optionalUsers = usersRepository.findById(chatId);

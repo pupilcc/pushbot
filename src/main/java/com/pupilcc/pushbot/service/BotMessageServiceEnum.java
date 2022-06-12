@@ -7,11 +7,9 @@ import com.pupilcc.pushbot.config.BotProperties;
 import com.pupilcc.pushbot.config.SpringContextHolder;
 import com.pupilcc.pushbot.utils.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 处理消息
+ *
  * @author pupilcc
  */
 public enum BotMessageServiceEnum implements IBotMessageService {
@@ -55,6 +53,7 @@ public enum BotMessageServiceEnum implements IBotMessageService {
 
     /**
      * 是否存在该命令
+     *
      * @param command 命令
      * @return true 存在; false 不存在;
      */

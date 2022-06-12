@@ -2,6 +2,7 @@ package com.pupilcc.pushbot.extension;
 
 /**
  * REST API 错误码接口
+ *
  * @author Mybatis Plus
  */
 public interface IErrorCode {

@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
  * WebHook 控制器
+ *
  * @author pupilcc
  */
 @RestController
@@ -23,7 +24,8 @@ public class WebhookController {
 
     /**
      * Telegram Webhook. 接收用户在 Telegram 端发送的消息
-     * @param update 消息
+     *
+     * @param update   消息
      * @param botToken TelegramBotToken
      */
     @RequestMapping("/{botToken}")
@@ -33,7 +35,8 @@ public class WebhookController {
 
     /**
      * Docker 自动构建成功消息
-     * @param dto 消息
+     *
+     * @param dto       消息
      * @param chatToken 用户Token
      */
     @RequestMapping("/docker/{chatToken}")
