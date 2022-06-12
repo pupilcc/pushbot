@@ -53,18 +53,17 @@ public class WebhookService {
      * @param chatToken 用户Token
      */
     public void webhookDocker(DockerWebHookDTO dto, String chatToken) {
-        // 检查 chatToken
         Users users = usersRepository.findByChatToken(chatToken);
-        if (ObjectUtils.isNotEmpty(users)) {
-            // 推送消息
-            SendMessageDTO messageDTO = new SendMessageDTO();
-            messageDTO.setText("Docker Hub 自动构建成功" + "\n\n" +
-                    dto.getRepository().getRepoName() + " 构建于 " + dto.getPushData().getTag() + "\n\n" +
-                    "[查看镜像](" + dto.getRepository().getRepoUrl() + ")");
-            messageDTO.setParseMode(ParseMode.Markdown);
-            messageService.sendMessage(messageDTO, chatToken);
-        } else {
+        if (ObjectUtils.isEmpty(users)) {
             log.info("用户 Token:{} 不存在", chatToken);
         }
+
+        // 推送消息
+        SendMessageDTO messageDTO = new SendMessageDTO();
+        messageDTO.setText("Docker Hub 自动构建成功" + "\n\n" +
+                dto.getRepository().getRepoName() + " 构建于 " + dto.getPushData().getTag() + "\n\n" +
+                "[查看镜像](" + dto.getRepository().getRepoUrl() + ")");
+        messageDTO.setParseMode(ParseMode.Markdown);
+        messageService.sendMessage(messageDTO, chatToken);
     }
 }
