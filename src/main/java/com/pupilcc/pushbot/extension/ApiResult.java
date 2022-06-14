@@ -75,15 +75,15 @@ public class ApiResult<T> implements Serializable {
         return restResult(null, errorCode);
     }
 
-    public boolean ok() {
-        return ApiErrorCode.SUCCESS.getCode() == this.code;
+    public boolean failed() {
+        return ApiErrorCode.SUCCESS.getCode() != this.code;
     }
 
     /**
      * 服务间调用非业务正常，异常直接释放
      */
     public T serviceData() {
-        if (!this.ok()) {
+        if (!this.failed()) {
             throw new ApiException(this.msg);
         } else {
             return this.data;

@@ -51,7 +51,7 @@ public class MessageService {
 
         // 参数校验
         ApiResult apiResult = checkParameter(dto);
-        if (!apiResult.ok()) {
+        if (apiResult.failed()) {
             return apiResult;
         }
         boolean isSend;
