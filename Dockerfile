@@ -4,5 +4,6 @@ COPY ./src src/
 RUN mvn clean package -B -e
 
 FROM amazoncorretto:8-alpine-jre
+RUN echo "Asia/Shanghai" > /etc/timezone
 COPY --from=MAVEN_BUILD target/*.jar app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
