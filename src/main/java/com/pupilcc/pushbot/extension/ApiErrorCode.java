@@ -1,19 +1,13 @@
 package com.pupilcc.pushbot.extension;
 
+import com.pupilcc.common.rest.IErrorCode;
+
 /**
  * REST API 错误码
  *
  * @author MyBatis Plus
  */
 public enum ApiErrorCode implements IErrorCode {
-    /**
-     * 失败
-     */
-    FAILED(-1L, "failed"),
-    /**
-     * 成功
-     */
-    SUCCESS(0L, "success"),
     /**
      * 参数为空
      */
