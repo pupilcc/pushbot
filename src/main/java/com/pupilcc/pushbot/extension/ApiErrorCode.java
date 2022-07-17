@@ -30,6 +30,10 @@ public enum ApiErrorCode implements IErrorCode {
      * 图片为空
      */
     IMG_NULL(-1L, "image null"),
+    /**
+     * 模板不存在
+     */
+    TEMPLATE_NOT_EXIST(-1L, "template not exist"),
 
     ;
 

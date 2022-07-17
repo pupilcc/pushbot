@@ -7,6 +7,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
 import com.pengrad.telegrambot.response.SendResponse;
 import com.pupilcc.pushbot.entity.SendMessageDTO;
+import com.pupilcc.pushbot.entity.TemplateMessageDTO;
 import com.pupilcc.pushbot.extension.ApiErrorCode;
 import com.pupilcc.pushbot.extension.ApiResult;
 import com.pupilcc.pushbot.users.Users;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 消息的业务处理
@@ -63,6 +65,35 @@ public class MessageService {
         }
 
         isSend = sendMessage(dto.getText(), dto.getParseMode(), users.getChatId());
+        return ApiResult.success(isSend);
+    }
+
+    /**
+     * 发送模板消息
+     *
+     * @param message 模板消息
+     * @param chatToken 用户Token
+     * @return 发送结果
+     */
+    public ApiResult<Object> sendTemplate(TemplateMessageDTO message, String chatToken) {
+        // 查找用户
+        Users users = usersRepository.findByChatToken(chatToken);
+        // 用户不存在
+        if (ObjectUtils.isEmpty(users)) {
+            return ApiResult.failed(ApiErrorCode.USER_NOT_EXIST);
+        }
+
+        // 通过 id 获取模板内容
+        Map<Integer, String> templateMap = TemplateContent.map;
+        String template = templateMap.get(message.getTemplateId());
+        if (StringUtils.isBlank(template)) {
+            return ApiResult.failed(ApiErrorCode.TEMPLATE_NOT_EXIST);
+        }
+
+        // 消息内容替换
+        String context = String.format(template, message.getTitle(), message.getContent());
+
+        boolean isSend = sendMessage(context, ParseMode.Markdown, users.getChatId());
         return ApiResult.success(isSend);
     }
 
