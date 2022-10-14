@@ -7,6 +7,7 @@
 ## 功能
 
 * [推送消息](#推送消息)
+* [推送模板消息](#推送模板消息)
 * [推送 Docker Hub 自动构建成功消息](#DockerHub)
 
 ## 食用指南
@@ -43,6 +44,20 @@ curl -d "text=HelloWorld" -X POST https://pb.pupilcc.app/sendMessage/{chatToken}
 # 推送图片
 curl -d "photo=https://xxx.com/xxxxx.jpg" -X POST https://pb.pupilcc.app/sendMessage/{chatToken}
 ```
+
+### 推送模板消息
+
+接口地址：`/sendTemplate/{chatToken}`
+
+**参数说明：**
+
+参数|类型|必须|说明
+-|-|-|-
+templateId|String|是|模板id
+title|String|是|标题
+content|String|否|内容
+
+[查看现有模板样式](https://github.com/pupilcc/pushbot/blob/master/docs/template.md)
 
 ### <span id="DockerHub">推送 Docker Hub 自动构建成功消息</span>
 
