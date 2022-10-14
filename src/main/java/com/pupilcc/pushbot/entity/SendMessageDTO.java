@@ -5,6 +5,7 @@ import lombok.Data;
 
 /**
  * 发送消息的参数
+ *
  * @author pupilcc
  */
 @Data

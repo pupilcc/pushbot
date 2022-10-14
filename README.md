@@ -4,12 +4,13 @@
 
 提供了 [Docker 镜像](https://hub.docker.com/r/pupilcc/pushbot)，便于自建，也可直接使用我提供的 Bot，欢迎品尝~（[点击此处添加 Bot](https://t.me/notification_me_bot))
 
-## 功能
+## 一、功能
 
 * [推送消息](#推送消息)
+* [推送模板消息](#推送模板消息)
 * [推送 Docker Hub 自动构建成功消息](#DockerHub)
 
-## 食用指南
+## 二、食用指南
 
 ### Bot 命令说明
 
@@ -28,7 +29,7 @@
 -|-|-|-
 text|String|是|文字内容(当 photo 存在时可为空)
 photo|String|否|图片文件或者图片外链
-parse_mode|String|否|发送文字内容的样式，可以是 Markdown 或 HTML
+parseMode|String|否|发送文字内容的样式，可以是 Markdown 或 HTML
 
 ```bash
 # using get
@@ -44,6 +45,20 @@ curl -d "text=HelloWorld" -X POST https://pb.pupilcc.app/sendMessage/{chatToken}
 curl -d "photo=https://xxx.com/xxxxx.jpg" -X POST https://pb.pupilcc.app/sendMessage/{chatToken}
 ```
 
+### 推送模板消息
+
+接口地址：`/sendTemplate/{chatToken}`
+
+**参数说明：**
+
+参数|类型|必须|说明
+-|-|-|-
+templateId|String|是|模板id
+title|String|是|标题
+content|String|否|内容
+
+[查看现有模板样式](https://github.com/pupilcc/pushbot/blob/master/docs/template.md)
+
 ### <span id="DockerHub">推送 Docker Hub 自动构建成功消息</span>
 
 接口地址：`/webhook/docker/{chatToken}`
@@ -57,7 +72,7 @@ curl -d "photo=https://xxx.com/xxxxx.jpg" -X POST https://pb.pupilcc.app/sendMes
 Bot 不会识别和储存任何用户推送的消息，只会将推送消息发送给 Telegram 服务器。Bot 只会记录用户回话 id，此 id 是向 Telegram 推送消息的凭据。
 
 
-## 自建指南
+## 三、自建指南
 
 ### 食材
 

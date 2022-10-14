@@ -6,9 +6,10 @@ import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
 import com.pengrad.telegrambot.response.SendResponse;
+import com.pupilcc.common.rest.ApiResult;
 import com.pupilcc.pushbot.entity.SendMessageDTO;
+import com.pupilcc.pushbot.entity.TemplateMessageDTO;
 import com.pupilcc.pushbot.extension.ApiErrorCode;
-import com.pupilcc.pushbot.extension.ApiResult;
 import com.pupilcc.pushbot.users.Users;
 import com.pupilcc.pushbot.users.UsersRepository;
 import org.apache.commons.lang3.ObjectUtils;
@@ -18,9 +19,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 消息的业务处理
+ *
  * @author pupilcc
  */
 @Service
@@ -35,7 +38,8 @@ public class MessageService {
 
     /**
      * 发送消息
-     * @param dto 消息内容
+     *
+     * @param dto       消息内容
      * @param chatToken 用户Token
      * @return 响应信息
      */
@@ -49,7 +53,7 @@ public class MessageService {
 
         // 参数校验
         ApiResult apiResult = checkParameter(dto);
-        if (!apiResult.ok()) {
+        if (apiResult.failed()) {
             return apiResult;
         }
         boolean isSend;
@@ -65,10 +69,40 @@ public class MessageService {
     }
 
     /**
+     * 发送模板消息
+     *
+     * @param message 模板消息
+     * @param chatToken 用户Token
+     * @return 发送结果
+     */
+    public ApiResult<Object> sendTemplate(TemplateMessageDTO message, String chatToken) {
+        // 查找用户
+        Users users = usersRepository.findByChatToken(chatToken);
+        // 用户不存在
+        if (ObjectUtils.isEmpty(users)) {
+            return ApiResult.failed(ApiErrorCode.USER_NOT_EXIST);
+        }
+
+        // 通过 id 获取模板内容
+        Map<Integer, String> templateMap = TemplateContent.map;
+        String template = templateMap.get(message.getTemplateId());
+        if (StringUtils.isBlank(template)) {
+            return ApiResult.failed(ApiErrorCode.TEMPLATE_NOT_EXIST);
+        }
+
+        // 消息内容替换
+        String context = String.format(template, message.getTitle(), message.getContent());
+
+        boolean isSend = sendMessage(context, ParseMode.Markdown, users.getChatId());
+        return ApiResult.success(isSend);
+    }
+
+    /**
      * 发送消息
-     * @param text 消息内容
+     *
+     * @param text      消息内容
      * @param parseMode 消息格式
-     * @param chatId 用户id
+     * @param chatId    用户id
      * @return 响应信息
      */
     private boolean sendMessage(String text, ParseMode parseMode, Long chatId) {
@@ -83,7 +117,8 @@ public class MessageService {
 
     /**
      * 发送图片
-     * @param dto 消息内容
+     *
+     * @param dto    消息内容
      * @param chatId 用户id
      * @return 是否发送成功
      */
@@ -101,7 +136,7 @@ public class MessageService {
         if (isFile) {
             FilePart filePart = (FilePart) dto.getPhoto();
             String fileName = filePart.filename();
-            String prefix= fileName.substring(fileName.lastIndexOf("."));
+            String prefix = fileName.substring(fileName.lastIndexOf("."));
 
             final File file;
             try {
@@ -119,10 +154,11 @@ public class MessageService {
 
     /**
      * 发送图片
-     * @param text 消息内容
+     *
+     * @param text      消息内容
      * @param parseMode 消息格式
-     * @param photoUrl 图片链接
-     * @param chatId 用户id
+     * @param photoUrl  图片链接
+     * @param chatId    用户id
      * @return 响应信息
      */
     private boolean sendPhoto(String text, String photoUrl, ParseMode parseMode, Long chatId) {
@@ -132,10 +168,11 @@ public class MessageService {
 
     /**
      * 发送图片
-     * @param text 消息内容
+     *
+     * @param text      消息内容
      * @param parseMode 消息格式
      * @param photoFile 图片文件
-     * @param chatId 用户id
+     * @param chatId    用户id
      * @return 响应信息
      */
     private boolean sendPhoto(String text, File photoFile, ParseMode parseMode, Long chatId) {
@@ -145,8 +182,9 @@ public class MessageService {
 
     /**
      * 发送图片
+     *
      * @param sendPhoto 图片对象
-     * @param text 消息内容
+     * @param text      消息内容
      * @param parseMode 消息格式
      * @return 响应信息
      */
@@ -163,6 +201,7 @@ public class MessageService {
 
     /**
      * 参数校验
+     *
      * @param dto 消息内容
      * @return 业务码
      */
@@ -180,6 +219,7 @@ public class MessageService {
 
     /**
      * 是否存在图片
+     *
      * @param dto 请求体
      * @return true 存在图片; false 不存在图片;
      */
