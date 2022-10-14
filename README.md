@@ -28,7 +28,7 @@
 -|-|-|-
 text|String|是|文字内容(当 photo 存在时可为空)
 photo|String|否|图片文件或者图片外链
-parse_mode|String|否|发送文字内容的样式，可以是 Markdown 或 HTML
+parseMode|String|否|发送文字内容的样式，可以是 Markdown 或 HTML
 
 ```bash
 # using get
