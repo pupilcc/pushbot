@@ -4,13 +4,13 @@
 
 提供了 [Docker 镜像](https://hub.docker.com/r/pupilcc/pushbot)，便于自建，也可直接使用我提供的 Bot，欢迎品尝~（[点击此处添加 Bot](https://t.me/notification_me_bot))
 
-## 功能
+## 一、功能
 
 * [推送消息](#推送消息)
 * [推送模板消息](#推送模板消息)
 * [推送 Docker Hub 自动构建成功消息](#DockerHub)
 
-## 食用指南
+## 二、食用指南
 
 ### Bot 命令说明
 
@@ -72,7 +72,7 @@ content|String|否|内容
 Bot 不会识别和储存任何用户推送的消息，只会将推送消息发送给 Telegram 服务器。Bot 只会记录用户回话 id，此 id 是向 Telegram 推送消息的凭据。
 
 
-## 自建指南
+## 三、自建指南
 
 ### 食材
 
