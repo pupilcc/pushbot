@@ -1,8 +1,9 @@
 package com.pupilcc.pushbot.users;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.io.Serializable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 用户实体类
@@ -10,29 +11,10 @@ import java.io.Serializable;
  * @author pupilcc
  */
 @Entity
-public class Users implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+@Data
+@NoArgsConstructor
+public class Users {
     @Id
     private Long chatId;
     private String chatToken;
-
-    public Users() {
-    }
-
-    public Long getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(Long chatId) {
-        this.chatId = chatId;
-    }
-
-    public String getChatToken() {
-        return chatToken;
-    }
-
-    public void setChatToken(String chatToken) {
-        this.chatToken = chatToken;
-    }
 }

@@ -6,7 +6,7 @@ spring:
     url: jdbc:sqlite:/app/pushbot/pushbot.db
     driver-class-name: org.sqlite.JDBC
   jpa:
-    database-platform: com.pupilcc.pushbot.config.SQLiteDialect
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
     show-sql: false
     hibernate:
       ddl-auto: none
