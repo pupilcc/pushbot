@@ -14,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Webhook 业务处理
  *
@@ -77,13 +75,12 @@ public class WebhookService {
     /**
      * Workflow Webhook Action
      *
-     * @param request
+     * @param signature
      * @param dto
      * @param chatToken
      */
-    public void workflow(HttpServletRequest request, WorkflowDTO dto, String chatToken) {
+    public void workflow(String signature, WorkflowDTO dto, String chatToken) {
         // 验证发送端
-        String signature = request.getHeader("x-hub-signature-256");
         boolean isValid = WorkflowUtils.verifySignature(chatToken, signature, dto.toString());
         log.info("Workflow 验证结果:{}", isValid);
         log.info("Workflow 验证签名:{}", signature);

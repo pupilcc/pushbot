@@ -6,8 +6,6 @@ import com.pupilcc.pushbot.service.WebhookService;
 import org.springframework.web.bind.annotation.*;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * WebHook 控制器
  *
@@ -51,7 +49,9 @@ public class WebhookController {
      * @param chatToken 用户Token
      */
     @PostMapping("/workflow/{chatToken}")
-    public void workflow(HttpServletRequest request, @RequestBody WorkflowDTO dto, @PathVariable String chatToken) {
-        webhookService.workflow(request, dto, chatToken);
+    public void workflow(@RequestHeader("x-hub-signature-256") String signature,
+                         @RequestBody WorkflowDTO dto,
+                         @PathVariable String chatToken) {
+        webhookService.workflow(signature, dto, chatToken);
     }
 }
