@@ -1,6 +1,5 @@
 package com.pupilcc.pushbot.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.Map;
@@ -25,8 +24,7 @@ public class WorkflowDTO {
 
     private String workflow;
 
-    @JsonProperty("requestID")
-    private String requestId;
+    private String requestID;
 
     private Map<String, String> data;
 }

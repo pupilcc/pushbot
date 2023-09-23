@@ -1,5 +1,6 @@
 package com.pupilcc.pushbot.service;
 
+import cn.hutool.json.JSONUtil;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pupilcc.pushbot.config.BotProperties;
 import com.pupilcc.pushbot.entity.DockerWebHookDTO;
@@ -75,16 +76,16 @@ public class WebhookService {
     /**
      * Workflow Webhook Action
      *
-     * @param signature
+     * @param signatureHeader
      * @param dto
      * @param chatToken
      */
-    public void workflow(String signature, WorkflowDTO dto, String chatToken) {
-        // 验证发送端
-        log.info("Workflow 验证签名:{}", signature);
-        log.info("Workflow 验证内容:{}", dto.toString());
-        boolean isValid = WorkflowUtils.verifySignature(chatToken, signature, dto.toString());
-        log.info("Workflow 验证结果:{}", isValid);
+    public void workflow(String signatureHeader, WorkflowDTO dto, String chatToken) {
+        // TODO Ensure that the Webhook request is from GitHub, so compare the Signature
+        boolean isValid = WorkflowUtils.verifySignature(chatToken, signatureHeader, JSONUtil.toJsonStr(dto));
+//        if (!isValid) {
+//            return;
+//        }
 
         Users users = usersRepository.findByChatToken(chatToken);
         if (ObjectUtils.isEmpty(users)) {
@@ -92,7 +93,7 @@ public class WebhookService {
         }
 
         SendMessageDTO messageDTO = new SendMessageDTO();
-        messageDTO.setText(dto.getRepository() + dto.getWorkflow());
+        messageDTO.setText(dto.getRepository() + ":" + dto.getWorkflow());
         messageDTO.setParseMode(ParseMode.Markdown);
         messageService.sendMessage(messageDTO, chatToken);
     }

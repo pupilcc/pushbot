@@ -49,9 +49,9 @@ public class WebhookController {
      * @param chatToken 用户Token
      */
     @PostMapping("/workflow/{chatToken}")
-    public void workflow(@RequestHeader("x-hub-signature-256") String signature,
+    public void workflow(@RequestHeader("x-hub-signature-256") String signatureHeader,
                          @RequestBody WorkflowDTO dto,
                          @PathVariable String chatToken) {
-        webhookService.workflow(signature, dto, chatToken);
+        webhookService.workflow(signatureHeader, dto, chatToken);
     }
 }
