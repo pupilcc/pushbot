@@ -81,10 +81,10 @@ public class WebhookService {
      */
     public void workflow(String signature, WorkflowDTO dto, String chatToken) {
         // 验证发送端
-        boolean isValid = WorkflowUtils.verifySignature(chatToken, signature, dto.toString());
-        log.info("Workflow 验证结果:{}", isValid);
         log.info("Workflow 验证签名:{}", signature);
         log.info("Workflow 验证内容:{}", dto.toString());
+        boolean isValid = WorkflowUtils.verifySignature(chatToken, signature, dto.toString());
+        log.info("Workflow 验证结果:{}", isValid);
 
         Users users = usersRepository.findByChatToken(chatToken);
         if (ObjectUtils.isEmpty(users)) {
