@@ -13,10 +13,10 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RestController
 @RequestMapping("/webhook")
 public class WebhookController {
-    private final WebhookService webHookService;
+    private final WebhookService webhookService;
 
-    public WebhookController(WebhookService webHookService) {
-        this.webHookService = webHookService;
+    public WebhookController(WebhookService webhookService) {
+        this.webhookService = webhookService;
     }
 
     /**
@@ -26,8 +26,8 @@ public class WebhookController {
      * @param botToken TelegramBotToken
      */
     @PostMapping("/{botToken}")
-    public void webhookTelegram(@RequestBody Update update, @PathVariable String botToken) {
-        webHookService.message(update, botToken);
+    public void telegram(@RequestBody Update update, @PathVariable String botToken) {
+        webhookService.message(update, botToken);
     }
 
     /**
@@ -37,7 +37,7 @@ public class WebhookController {
      * @param chatToken 用户Token
      */
     @PostMapping("/docker/{chatToken}")
-    public void webhookDocker(@RequestBody DockerWebHookDTO dto, @PathVariable String chatToken) {
-        webHookService.webhookDocker(dto, chatToken);
+    public void docker(@RequestBody DockerWebHookDTO dto, @PathVariable String chatToken) {
+        webhookService.docker(dto, chatToken);
     }
 }

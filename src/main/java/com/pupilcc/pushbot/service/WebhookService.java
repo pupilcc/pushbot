@@ -55,7 +55,7 @@ public class WebhookService {
      * @param dto       消息
      * @param chatToken 用户Token
      */
-    public void webhookDocker(DockerWebHookDTO dto, String chatToken) {
+    public void docker(DockerWebHookDTO dto, String chatToken) {
         Users users = usersRepository.findByChatToken(chatToken);
         if (ObjectUtils.isEmpty(users)) {
             log.info("用户 Token:{} 不存在", chatToken);
