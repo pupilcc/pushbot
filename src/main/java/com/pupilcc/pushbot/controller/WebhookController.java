@@ -2,10 +2,7 @@ package com.pupilcc.pushbot.controller;
 
 import com.pupilcc.pushbot.entity.DockerWebHookDTO;
 import com.pupilcc.pushbot.service.WebhookService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
@@ -28,7 +25,7 @@ public class WebhookController {
      * @param update   消息
      * @param botToken TelegramBotToken
      */
-    @RequestMapping("/{botToken}")
+    @PostMapping("/{botToken}")
     public void webhookTelegram(@RequestBody Update update, @PathVariable String botToken) {
         webHookService.message(update, botToken);
     }
@@ -39,7 +36,7 @@ public class WebhookController {
      * @param dto       消息
      * @param chatToken 用户Token
      */
-    @RequestMapping("/docker/{chatToken}")
+    @PostMapping("/docker/{chatToken}")
     public void webhookDocker(@RequestBody DockerWebHookDTO dto, @PathVariable String chatToken) {
         webHookService.webhookDocker(dto, chatToken);
     }
