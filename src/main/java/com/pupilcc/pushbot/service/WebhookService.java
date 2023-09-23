@@ -4,13 +4,17 @@ import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pupilcc.pushbot.config.BotProperties;
 import com.pupilcc.pushbot.entity.DockerWebHookDTO;
 import com.pupilcc.pushbot.entity.SendMessageDTO;
+import com.pupilcc.pushbot.entity.WorkflowDTO;
 import com.pupilcc.pushbot.users.Users;
 import com.pupilcc.pushbot.users.UsersRepository;
+import com.pupilcc.pushbot.utils.WorkflowUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Webhook 业务处理
@@ -66,6 +70,32 @@ public class WebhookService {
         messageDTO.setText("Docker Hub 自动构建成功" + "\n\n" +
                 dto.getRepository().getRepoName() + " 构建于 " + dto.getPushData().getTag() + "\n\n" +
                 "[查看镜像](" + dto.getRepository().getRepoUrl() + ")");
+        messageDTO.setParseMode(ParseMode.Markdown);
+        messageService.sendMessage(messageDTO, chatToken);
+    }
+
+    /**
+     * Workflow Webhook Action
+     *
+     * @param request
+     * @param dto
+     * @param chatToken
+     */
+    public void workflow(HttpServletRequest request, WorkflowDTO dto, String chatToken) {
+        // 验证发送端
+        String signature = request.getHeader("x-hub-signature-256");
+        boolean isValid = WorkflowUtils.verifySignature(chatToken, signature, dto.toString());
+        log.info("Workflow 验证结果:{}", isValid);
+        log.info("Workflow 验证签名:{}", signature);
+        log.info("Workflow 验证内容:{}", dto.toString());
+
+        Users users = usersRepository.findByChatToken(chatToken);
+        if (ObjectUtils.isEmpty(users)) {
+            log.info("用户 Token:{} 不存在", chatToken);
+        }
+
+        SendMessageDTO messageDTO = new SendMessageDTO();
+        messageDTO.setText(dto.getRepository() + dto.getWorkflow());
         messageDTO.setParseMode(ParseMode.Markdown);
         messageService.sendMessage(messageDTO, chatToken);
     }
