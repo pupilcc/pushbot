@@ -1,11 +1,9 @@
 package com.pupilcc.pushbot.controller;
 
 import com.pupilcc.pushbot.entity.DockerWebHookDTO;
+import com.pupilcc.pushbot.entity.WorkflowDTO;
 import com.pupilcc.pushbot.service.WebhookService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
@@ -16,10 +14,10 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RestController
 @RequestMapping("/webhook")
 public class WebhookController {
-    private final WebhookService webHookService;
+    private final WebhookService webhookService;
 
-    public WebhookController(WebhookService webHookService) {
-        this.webHookService = webHookService;
+    public WebhookController(WebhookService webhookService) {
+        this.webhookService = webhookService;
     }
 
     /**
@@ -28,9 +26,9 @@ public class WebhookController {
      * @param update   消息
      * @param botToken TelegramBotToken
      */
-    @RequestMapping("/{botToken}")
-    public void webhookTelegram(@RequestBody Update update, @PathVariable String botToken) {
-        webHookService.message(update, botToken);
+    @PostMapping("/{botToken}")
+    public void telegram(@RequestBody Update update, @PathVariable String botToken) {
+        webhookService.message(update, botToken);
     }
 
     /**
@@ -39,8 +37,21 @@ public class WebhookController {
      * @param dto       消息
      * @param chatToken 用户Token
      */
-    @RequestMapping("/docker/{chatToken}")
-    public void webhookDocker(@RequestBody DockerWebHookDTO dto, @PathVariable String chatToken) {
-        webHookService.webhookDocker(dto, chatToken);
+    @PostMapping("/docker/{chatToken}")
+    public void docker(@RequestBody DockerWebHookDTO dto, @PathVariable String chatToken) {
+        webhookService.docker(dto, chatToken);
+    }
+
+    /**
+     * GitHub Workflow Webhook
+     *
+     * @param dto       消息
+     * @param chatToken 用户Token
+     */
+    @PostMapping("/workflow/{chatToken}")
+    public void workflow(@RequestHeader("x-hub-signature-256") String signatureHeader,
+                         @RequestBody WorkflowDTO dto,
+                         @PathVariable String chatToken) {
+        webhookService.workflow(signatureHeader, dto, chatToken);
     }
 }

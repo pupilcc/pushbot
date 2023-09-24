@@ -37,3 +37,4 @@ build/
 
 ### Dev ###
 src/main/resources/application-dev.yaml
+*.db

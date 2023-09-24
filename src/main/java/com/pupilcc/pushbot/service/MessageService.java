@@ -7,6 +7,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
 import com.pengrad.telegrambot.response.SendResponse;
 import com.pupilcc.common.rest.ApiResult;
+import com.pupilcc.pushbot.entity.MessageDTO;
 import com.pupilcc.pushbot.entity.SendMessageDTO;
 import com.pupilcc.pushbot.entity.TemplateMessageDTO;
 import com.pupilcc.pushbot.extension.ApiErrorCode;
@@ -14,6 +15,7 @@ import com.pupilcc.pushbot.users.Users;
 import com.pupilcc.pushbot.users.UsersRepository;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,26 @@ public class MessageService {
     public MessageService(UsersRepository usersRepository, TelegramBot telegramBot) {
         this.usersRepository = usersRepository;
         this.telegramBot = telegramBot;
+    }
+
+    /**
+     * 发送消息
+     *
+     * @param dto       消息内容
+     * @param chatToken 用户Token
+     * @return 响应信息
+     */
+    public ApiResult<Object> sendMessage(MessageDTO dto, String chatToken) {
+        if (ObjectUtils.isNotEmpty(dto.getTemplateId())) {
+            TemplateMessageDTO templateMessageDTO = new TemplateMessageDTO();
+            BeanUtils.copyProperties(dto, templateMessageDTO);
+            templateMessageDTO.setContent(dto.getText());
+            return this.sendTemplate(templateMessageDTO, chatToken);
+        } else {
+            SendMessageDTO sendMessageDTO = new SendMessageDTO();
+            BeanUtils.copyProperties(dto, sendMessageDTO);
+            return this.sendMessage(sendMessageDTO, chatToken);
+        }
     }
 
     /**

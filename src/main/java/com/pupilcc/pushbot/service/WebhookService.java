@@ -1,11 +1,14 @@
 package com.pupilcc.pushbot.service;
 
+import cn.hutool.json.JSONUtil;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pupilcc.pushbot.config.BotProperties;
 import com.pupilcc.pushbot.entity.DockerWebHookDTO;
 import com.pupilcc.pushbot.entity.SendMessageDTO;
+import com.pupilcc.pushbot.entity.WorkflowDTO;
 import com.pupilcc.pushbot.users.Users;
 import com.pupilcc.pushbot.users.UsersRepository;
+import com.pupilcc.pushbot.utils.WorkflowUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +58,7 @@ public class WebhookService {
      * @param dto       消息
      * @param chatToken 用户Token
      */
-    public void webhookDocker(DockerWebHookDTO dto, String chatToken) {
+    public void docker(DockerWebHookDTO dto, String chatToken) {
         Users users = usersRepository.findByChatToken(chatToken);
         if (ObjectUtils.isEmpty(users)) {
             log.info("用户 Token:{} 不存在", chatToken);
@@ -66,6 +69,31 @@ public class WebhookService {
         messageDTO.setText("Docker Hub 自动构建成功" + "\n\n" +
                 dto.getRepository().getRepoName() + " 构建于 " + dto.getPushData().getTag() + "\n\n" +
                 "[查看镜像](" + dto.getRepository().getRepoUrl() + ")");
+        messageDTO.setParseMode(ParseMode.Markdown);
+        messageService.sendMessage(messageDTO, chatToken);
+    }
+
+    /**
+     * Workflow Webhook Action
+     *
+     * @param signatureHeader
+     * @param dto
+     * @param chatToken
+     */
+    public void workflow(String signatureHeader, WorkflowDTO dto, String chatToken) {
+        // TODO Ensure that the Webhook request is from GitHub, so compare the Signature
+        boolean isValid = WorkflowUtils.verifySignature(chatToken, signatureHeader, JSONUtil.toJsonStr(dto));
+//        if (!isValid) {
+//            return;
+//        }
+
+        Users users = usersRepository.findByChatToken(chatToken);
+        if (ObjectUtils.isEmpty(users)) {
+            log.info("用户 Token:{} 不存在", chatToken);
+        }
+
+        SendMessageDTO messageDTO = new SendMessageDTO();
+        messageDTO.setText(dto.getRepository() + ":" + dto.getWorkflow());
         messageDTO.setParseMode(ParseMode.Markdown);
         messageService.sendMessage(messageDTO, chatToken);
     }
