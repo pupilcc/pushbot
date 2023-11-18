@@ -1,4 +1,4 @@
-package com.pupilcc.pushbot.entity;
+package com.pupilcc.pushbot.dto;
 
 import com.pengrad.telegrambot.model.request.ParseMode;
 import lombok.Data;

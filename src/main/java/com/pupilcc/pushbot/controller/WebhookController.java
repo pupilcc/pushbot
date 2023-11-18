@@ -1,7 +1,7 @@
 package com.pupilcc.pushbot.controller;
 
-import com.pupilcc.pushbot.entity.DockerWebHookDTO;
-import com.pupilcc.pushbot.entity.WorkflowDTO;
+import com.pupilcc.pushbot.dto.docker.DockerWebHookDTO;
+import com.pupilcc.pushbot.dto.WorkflowDTO;
 import com.pupilcc.pushbot.service.WebhookService;
 import org.springframework.web.bind.annotation.*;
 import org.telegram.telegrambots.meta.api.objects.Update;

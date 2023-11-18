@@ -1,8 +1,8 @@
 package com.pupilcc.pushbot.controller;
 
 import com.pupilcc.common.rest.ApiResult;
-import com.pupilcc.pushbot.entity.MessageDTO;
-import com.pupilcc.pushbot.entity.TemplateMessageDTO;
+import com.pupilcc.pushbot.dto.MessageDTO;
+import com.pupilcc.pushbot.dto.TemplateMessageDTO;
 import com.pupilcc.pushbot.service.MessageService;
 import org.springframework.web.bind.annotation.*;
 
