@@ -11,16 +11,6 @@ import lombok.Data;
 @Data
 public class MessageDTO {
     /**
-     * 消息模板id
-     */
-    private Integer templateId;
-
-    /**
-     * 标题
-     */
-    private String title;
-
-    /**
      * 文本内容
      */
     private String text;

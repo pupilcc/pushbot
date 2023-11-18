@@ -8,14 +8,12 @@ import com.pengrad.telegrambot.request.SendPhoto;
 import com.pengrad.telegrambot.response.SendResponse;
 import com.pupilcc.common.rest.ApiResult;
 import com.pupilcc.pushbot.entity.MessageDTO;
-import com.pupilcc.pushbot.entity.SendMessageDTO;
 import com.pupilcc.pushbot.entity.TemplateMessageDTO;
 import com.pupilcc.pushbot.extension.ApiErrorCode;
 import com.pupilcc.pushbot.users.Users;
 import com.pupilcc.pushbot.users.UsersRepository;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
 
@@ -46,26 +44,6 @@ public class MessageService {
      * @return 响应信息
      */
     public ApiResult<Object> sendMessage(MessageDTO dto, String chatToken) {
-        if (ObjectUtils.isNotEmpty(dto.getTemplateId())) {
-            TemplateMessageDTO templateMessageDTO = new TemplateMessageDTO();
-            BeanUtils.copyProperties(dto, templateMessageDTO);
-            templateMessageDTO.setContent(dto.getText());
-            return this.sendTemplate(templateMessageDTO, chatToken);
-        } else {
-            SendMessageDTO sendMessageDTO = new SendMessageDTO();
-            BeanUtils.copyProperties(dto, sendMessageDTO);
-            return this.sendMessage(sendMessageDTO, chatToken);
-        }
-    }
-
-    /**
-     * 发送消息
-     *
-     * @param dto       消息内容
-     * @param chatToken 用户Token
-     * @return 响应信息
-     */
-    public ApiResult<Object> sendMessage(SendMessageDTO dto, String chatToken) {
         // 查找用户
         Users users = usersRepository.findByChatToken(chatToken);
         // 用户不存在
@@ -144,7 +122,7 @@ public class MessageService {
      * @param chatId 用户id
      * @return 是否发送成功
      */
-    private boolean sendPhoto(SendMessageDTO dto, Long chatId) {
+    private boolean sendPhoto(MessageDTO dto, Long chatId) {
         boolean isSend = false;
         Object photoObj = dto.getPhoto();
 
@@ -227,7 +205,7 @@ public class MessageService {
      * @param dto 消息内容
      * @return 业务码
      */
-    private ApiResult checkParameter(SendMessageDTO dto) {
+    private ApiResult checkParameter(MessageDTO dto) {
         if (ObjectUtils.isEmpty(dto)) {
             return ApiResult.failed(ApiErrorCode.PARAMETER_NULL);
         }
@@ -245,7 +223,7 @@ public class MessageService {
      * @param dto 请求体
      * @return true 存在图片; false 不存在图片;
      */
-    private boolean isExistPhoto(SendMessageDTO dto) {
+    private boolean isExistPhoto(MessageDTO dto) {
         return ObjectUtils.isNotEmpty(dto.getPhoto());
     }
 }

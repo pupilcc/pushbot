@@ -4,7 +4,6 @@ import cn.hutool.json.JSONUtil;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pupilcc.pushbot.config.BotProperties;
 import com.pupilcc.pushbot.entity.DockerWebHookDTO;
-import com.pupilcc.pushbot.entity.SendMessageDTO;
 import com.pupilcc.pushbot.entity.WorkflowDTO;
 import com.pupilcc.pushbot.users.Users;
 import com.pupilcc.pushbot.users.UsersRepository;
