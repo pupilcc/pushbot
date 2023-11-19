@@ -91,7 +91,7 @@ public class MessageService {
         }
 
         // 消息内容替换
-        String context = String.format(template, message.getTitle(), message.getContent());
+        String context = String.format(template, message.getTitle(), message.getText());
 
         boolean isSend = sendMessage(context, ParseMode.Markdown, users.getChatId());
         return ApiResult.success(isSend);

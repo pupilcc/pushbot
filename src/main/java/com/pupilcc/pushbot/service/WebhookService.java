@@ -3,8 +3,9 @@ package com.pupilcc.pushbot.service;
 import cn.hutool.json.JSONUtil;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pupilcc.pushbot.config.BotProperties;
-import com.pupilcc.pushbot.dto.docker.DockerWebHookDTO;
+import com.pupilcc.pushbot.dto.MessageDTO;
 import com.pupilcc.pushbot.dto.WorkflowDTO;
+import com.pupilcc.pushbot.dto.docker.DockerWebHookDTO;
 import com.pupilcc.pushbot.users.Users;
 import com.pupilcc.pushbot.users.UsersRepository;
 import com.pupilcc.pushbot.utils.WorkflowUtils;
@@ -64,7 +65,7 @@ public class WebhookService {
         }
 
         // 推送消息
-        SendMessageDTO messageDTO = new SendMessageDTO();
+        MessageDTO messageDTO = new MessageDTO();
         messageDTO.setText("Docker Hub 自动构建成功" + "\n\n" +
                 dto.getRepository().getRepoName() + " 构建于 " + dto.getPushData().getTag() + "\n\n" +
                 "[查看镜像](" + dto.getRepository().getRepoUrl() + ")");
@@ -91,7 +92,7 @@ public class WebhookService {
             log.info("用户 Token:{} 不存在", chatToken);
         }
 
-        SendMessageDTO messageDTO = new SendMessageDTO();
+        MessageDTO messageDTO = new MessageDTO();
         messageDTO.setText(dto.getRepository() + ":" + dto.getWorkflow());
         messageDTO.setParseMode(ParseMode.Markdown);
         messageService.sendMessage(messageDTO, chatToken);

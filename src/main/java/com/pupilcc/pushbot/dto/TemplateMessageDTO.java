@@ -23,5 +23,5 @@ public class TemplateMessageDTO {
     /**
      * 内容
      */
-    private String content;
+    private String text;
 }
