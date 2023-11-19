@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.pupilcc</groupId>
     <artifactId>pushbot</artifactId>
-    <version>0.3.0</version>
+    <version>0.4.0</version>
     <name>pushbot</name>
     <description>telegram notification bot</description>
 
