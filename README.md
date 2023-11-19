@@ -6,7 +6,7 @@ The project is a message push bot based on Telegram Bot, which can push messages
 
 A [Docker image](https://hub.docker.com/r/pupilcc/pushbot) is provided for easy self-building. You can also directly use the Bot I provide. Feel free to give it a try! ([Click here to add the Bot](https://t.me/notification_me_bot))
 
-[Document](https://pushbot-docs.vercel.app)
+[Document](https://docs.pushbot.dev)
 
 #### 中文
 
@@ -14,7 +14,7 @@ A [Docker image](https://hub.docker.com/r/pupilcc/pushbot) is provided for easy 
 
 提供了 [Docker 镜像](https://hub.docker.com/r/pupilcc/pushbot)，便于自建，也可直接使用我提供的 Bot，欢迎品尝~（[点击此处添加 Bot](https://t.me/notification_me_bot))
 
-[文档](https://pushbot-docs.vercel.app)
+[文档](https://docs.pushbot.dev)
 
 ## 感谢
 
