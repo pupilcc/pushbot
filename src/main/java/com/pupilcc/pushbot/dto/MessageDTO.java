@@ -1,4 +1,4 @@
-package com.pupilcc.pushbot.entity;
+package com.pupilcc.pushbot.dto;
 
 import com.pengrad.telegrambot.model.request.ParseMode;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.Data;
  * @author pupilcc
  */
 @Data
-public class SendMessageDTO {
+public class MessageDTO {
     /**
      * 文本内容
      */

@@ -1,4 +1,4 @@
-package com.pupilcc.pushbot.entity;
+package com.pupilcc.pushbot.dto;
 
 import lombok.Data;
 
@@ -23,5 +23,5 @@ public class TemplateMessageDTO {
     /**
      * 内容
      */
-    private String content;
+    private String text;
 }

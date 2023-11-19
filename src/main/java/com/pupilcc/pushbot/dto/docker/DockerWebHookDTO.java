@@ -1,4 +1,4 @@
-package com.pupilcc.pushbot.entity;
+package com.pupilcc.pushbot.dto.docker;
 
 import lombok.Data;
 
